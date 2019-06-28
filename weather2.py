@@ -1,15 +1,19 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import json
 import sys
 import urllib.parse
 import urllib.request
 
-
+# weather's API
 WEATHER_URL="http://weather.livedoor.com/forecast/webservice/json/v1?city=%s"
 CITY_CODE="130010" # TOKYO
-TODAY = 0
-TOMMOROW = 1
+TODAY=0
+TOMMOROW=1
 
-LINE_TOKEN = "si04SBOWC0ubySsRzjcUA1dhT5743TYsTZVIMWRSd8u"
+# LINE notify's API
+LINE_TOKEN="mVe63KFviGXHXEmNVWIvUHSazWTkFg7qpiZGkryz3iN"
 LINE_NOTIFY_URL="https://notify-api.line.me/api/notify"
 
 def get_weather_info():
@@ -21,9 +25,10 @@ def get_weather_info():
         print ("Exception Error: ", e)
         sys.exit(1)
     return html_json
+
 def set_weather_info(weather_json, day):
-    max_temperature = None
     min_temperature = None
+    max_temperature = None
     try:
         date = weather_json['forecasts'][day]['date']
         weather = weather_json['forecasts'][day]['telop']
@@ -35,6 +40,7 @@ def set_weather_info(weather_json, day):
     msg = "%s\nweather: %s\nmin: %s\nmax: %s" % \
                (date, weather, min_temperature, max_temperature)
     return msg
+
 def send_weather_info(msg):
     method = "POST"
     headers = {"Authorization": "Bearer %s" % LINE_TOKEN}
@@ -47,7 +53,7 @@ def send_weather_info(msg):
     except Exception as e:
         print ("Exception Error: ", e)
         sys.exit(1)
- 
+
 def main():
     weather_json = get_weather_info()
     for day in [TODAY, TOMMOROW]:
