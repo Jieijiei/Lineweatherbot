@@ -1,1 +1,1 @@
-# LineweatherBOT
+# Lineweatherbot
