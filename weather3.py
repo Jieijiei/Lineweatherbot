@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+#
+# 参考URL: https://takahiromiura.github.io/web_scraping.html
+#
+
 import urllib.request
 from bs4 import BeautifulSoup
 import datetime
